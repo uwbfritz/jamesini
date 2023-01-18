@@ -14,3 +14,8 @@
 - Your database will persist
 - *Should have all the right stuff for your D9 instance
 - Composer installed
+
+### Usage:
+```
+rm -f ./html/index.php && cd html && git clone your_repo . && docker-compose up -d
+```
