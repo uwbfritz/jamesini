@@ -1,0 +1,31 @@
+version: "3"
+services:
+  frontend:
+    container_name: drupal9_jamesini_frontend
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - ./html:/var/www/html:rw
+      - ./config/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./config/apache2.conf:/etc/apache2/apache2.conf:ro
+    links:
+      - db
+  db:
+    image: mysql:8.0
+    volumes:
+      - ./data:/var/lib/mysql:rw
+    environment:
+      MYSQL_ROOT_PASSWORD: jamesini*
+      MYSQL_DATABASE: drupal9_jamesini
+      MYSQL_USER: drupal9_jamesini
+      MYSQL_PASSWORD: drupal9_jamesini
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    links:
+      - db
+    
+    
