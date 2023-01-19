@@ -14,6 +14,7 @@ RUN apt update && \
     libicu-dev \
     libzip-dev \
     libmagickwand-dev \
+    rsync \
     --no-install-recommends && \
     docker-php-ext-install pdo_mysql && \
     docker-php-ext-install mysqli && \
@@ -30,4 +31,5 @@ RUN apt update && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     a2enmod rewrite && \
     a2enmod headers && \
-    a2enmod expires
+    a2enmod expires && \
+    wget -O /usr/bin/drush https://github.com/drush-ops/drush-launcher/releases/latest/download/drush.phar && chmod +x /usr/bin/drush
