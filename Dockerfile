@@ -1,6 +1,5 @@
 FROM php:8.1-apache
 
-# A lesson in Dockerfiles for Mr. Woods. Let's see how much I can fit on one line. Don't try this at home kids.
 
 RUN apt update && \
     apt -y upgrade && \
