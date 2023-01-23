@@ -18,6 +18,7 @@ RUN apt update && \
     libzip-dev \
     zip \
     p7zip-full \
+    openssh-client \
     --no-install-recommends && \
     docker-php-ext-install pdo_mysql && \
     docker-php-ext-install mysqli && \
