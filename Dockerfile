@@ -14,6 +14,10 @@ RUN apt update && \
     libmagickwand-dev \
     ssl-cert \
     rsync \
+    zlib1g-dev \
+    libzip-dev \
+    zip \
+    p7zip-full \
     --no-install-recommends && \
     docker-php-ext-install pdo_mysql && \
     docker-php-ext-install mysqli && \
