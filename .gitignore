@@ -1,1 +1,3 @@
 data/
+# Ignore the D9 install folder
+html/
