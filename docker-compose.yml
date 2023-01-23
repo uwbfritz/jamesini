@@ -3,8 +3,10 @@ services:
   frontend:
     container_name: drupal9_jamesini_frontend
     build: .
+    image: "uwbfritz/d9frontend:latest"
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./html:/var/www/html:rw
       - ./config/php.ini:/usr/local/etc/php/php.ini:ro
@@ -27,5 +29,3 @@ services:
       - 8080:8080
     links:
       - db
-    
-    
