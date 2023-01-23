@@ -4,7 +4,6 @@ services:
     container_name: drupal9_jamesini_frontend
     build: .
     image: "uwbfritz/d9frontend:latest"
-    user: "${PUID}"
     ports:
       - "80:80"
       - "443:443"
@@ -16,7 +15,6 @@ services:
       - db
   db:
     image: mysql:8.0
-    user: "${PUID}"
     volumes:
       - ./data:/var/lib/mysql:rw
     environment:
