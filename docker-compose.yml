@@ -13,7 +13,7 @@ services:
       - ./config/apache2.conf:/etc/apache2/apache2.conf:ro
       - ${HOME}/docker/d9privatefiles:/home/d9privatefiles:rw
       - ${HOME}/docker/d9tempfiles:/home/d9tempfiles:rw
-      - ${HOME}/docker/d9publicfiles:/home/d9publicfiles:rw
+      - ${HOME}/docker/d9publicfiles:/var/www/html/sites/default/files:rw
     links:
       - db
   db:
