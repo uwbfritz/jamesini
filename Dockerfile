@@ -17,6 +17,7 @@ RUN apt update && \
     zlib1g-dev \
     libzip-dev \
     zip \
+    unzip \
     p7zip-full \
     openssh-client \
     --no-install-recommends && \
@@ -46,7 +47,11 @@ RUN apt update && \
     echo 'RewriteEngine On'                           >> 000-default.conf && \
     echo 'RewriteRule . https://%{SERVER_NAME} [R,L]' >> 000-default.conf && \
     echo '</VirtualHost>'                             >> 000-default.conf && \
-    wget -O /usr/bin/drush https://github.com/drush-ops/drush-launcher/releases/latest/download/drush.phar && chmod +x /usr/bin/drush
+    wget -O /usr/bin/drush https://github.com/drush-ops/drush-launcher/releases/latest/download/drush.phar && chmod +x /usr/bin/drush && \
+    wget -O /tmp/exa.zip https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip && \
+    unzip /tmp/exa.zip -d /tmp && \
+    chmod +x /tmp/bin/exa && mv /tmp/bin/exa /bin/exa && \
+    echo "alias las='exa --octal-permissions -l'" >> /root/.bashrc
 
 EXPOSE 80
 EXPOSE 443
