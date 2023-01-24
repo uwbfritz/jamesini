@@ -25,10 +25,3 @@ services:
       MYSQL_DATABASE: drupal9_jamesini
       MYSQL_USER: drupal9_jamesini
       MYSQL_PASSWORD: drupal9_jamesini
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
-    links:
-      - db
