@@ -11,6 +11,8 @@ services:
       - ./html:/var/www/html:rw
       - ./config/php.ini:/usr/local/etc/php/php.ini:ro
       - ./config/apache2.conf:/etc/apache2/apache2.conf:ro
+      - /Users/jamesini/docker/d9privatefiles:/home/d9privatefiles:rw
+      - /Users/jamesini/docker/d9tempfiles:/home/d9tempfiles:rw
     links:
       - db
   db:
