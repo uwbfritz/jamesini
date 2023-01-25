@@ -8,6 +8,9 @@ RUN apt update && \
     nano \
     mariadb-client \
     libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
     libmcrypt-dev \
     libicu-dev \
     libzip-dev \
