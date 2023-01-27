@@ -3,4 +3,3 @@ data/
 html/
 # Ignoring local cleanup script (uwbfritz)
 clean.sh
-.vscode/
