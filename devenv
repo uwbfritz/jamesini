@@ -20,6 +20,11 @@ drdbpassword="jamesini*"
 drfunction="$1"
 drparam="$2"
 drrepo="https://git.tacoma.uw.edu/uw-tacoma-advancement/uwtd8main.git"
+# Rsync
+drrsyncremotehost="jamesini@uwtdev3.tacoma.uw.edu"
+drrsyncremotepath="/home/jamesini/public_html/uwtd8main_testing/web/sites/default/files/*"
+drrsynclocalpath="/Users/jamesini/docker/d9publicfiles"
+
 
 # TPUT Colors
 # --------------------------------------------------------------------------------------------------
@@ -143,6 +148,25 @@ function destroy_all() {
   fi
 }
 
+
+# Rsync the files from uwtdev3 -> local
+function rsync_files(){
+  if [ -d "$drrsynclocalpath" ]; then
+    echo "Rsyncing files..."
+    echo ""
+    echo ""
+    rsync $drrsyncremotehost:"$drrsyncremotepath" $drrsynclocalpath  --ignore-existing -rv --omit-dir-times --no-perms --no-o --no-g
+    echo ""
+    echo ""
+    echo "Files rsynced"
+    echo ""
+    echo ""
+  else
+    echo "$drrsynclocalpath directory not found, exiting"
+    exit 1
+  fi
+}
+
 function main() {
   case "$drfunction" in
   "build")
@@ -175,6 +199,9 @@ function main() {
   "destroyall")
     destroy_all
     ;;
+  "rsync")
+    rsync_files
+    ;;
   *)
     echo "$red$bold"
     echo "No function passed, exiting $clear"
@@ -193,6 +220,7 @@ function main() {
     echo "  $green attachto $clear - Attach to an active container"
     echo "  $green destroy $clear - Destroy the development environment"
     echo "  $green destroyall $clear - Destroy all containers, images, volumes, networks, and your dev environment"
+    echo "  $green rsync $clear - Rsync the sites/default/files from uwtdev3 to local"
     echo ""
     exit 1
     ;;
