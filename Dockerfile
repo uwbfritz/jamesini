@@ -26,6 +26,8 @@ RUN apt update && \
     tmux \
     dialog \
     byobu \
+    lnav \
+    htop \
     --no-install-recommends && \
     docker-php-ext-install pdo_mysql && \
     docker-php-ext-install mysqli && \
@@ -60,13 +62,17 @@ RUN apt update && \
     chmod +x /tmp/bin/exa && mv /tmp/bin/exa /bin/exa && \
     echo "alias las='exa --octal-permissions -l'" >> /root/.bashrc
 
-COPY ./config/zelogs /bin/zelogs
+COPY ./config/dev /bin/dev
+COPY ./config/000-default.conf /etc/apache2/sites-enabled/000-default.conf
 
 RUN  bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 
 RUN sed -i 's/OSH_THEME="font"/OSH_THEME="powerline"/' $HOME/.bashrc && sed -i '/^[[:blank:]]*#/d;s/#.*//' $HOME/.bashrc && \
     sed -i '/^$/d' $HOME/.bashrc && \
-    mkdir -p $HOME/.byobu && echo -e "set -g mouse on\nset -g mouse-select-pane on\nset -g mouse-select-window on\nset -g mouse-resize-pane on\nset -g mouse-utf8 on" >> $HOME/.byobu/profile.tmux
+    mkdir -p $HOME/.byobu && echo "set -g mouse on" > $HOME/.byobu/.tmux.conf && \
+    echo "export USER=root" >> $HOME/.bashrc && \
+    mkdir -p /var/log/web && \
+    echo "bash /bin/dev" >> $HOME/.bashrc
 
 EXPOSE 80
 EXPOSE 443

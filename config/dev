@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+byobu-tmux new-session -s d9 -d htop
+byobu-tmux new-window lnav /var/log/web/
+byobu-tmux new-window bash
+byobu-tmux join-pane -t d9:0 -s1
+byobu-tmux join-pane -t d9:0 -s2
+byobu-tmux join-pane -t d9:0 -s3
+byobu-tmux select-layout -t d9:0 tiled
+byobu-tmux attach
