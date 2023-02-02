@@ -71,8 +71,6 @@ RUN sed -i 's/OSH_THEME="font"/OSH_THEME="powerline"/' $HOME/.bashrc && sed -i '
     sed -i '/^$/d' $HOME/.bashrc && \
     mkdir -p $HOME/.byobu && echo "set -g mouse on" > $HOME/.byobu/.tmux.conf && \
     echo "export USER=root" >> $HOME/.bashrc && \
-    mkdir -p /var/log/web && \
-    echo "bash /bin/dev" >> $HOME/.bashrc
-
+    mkdir -p /var/log/web
 EXPOSE 80
 EXPOSE 443
