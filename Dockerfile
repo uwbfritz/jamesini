@@ -57,5 +57,14 @@ RUN apt update && \
     chmod +x /tmp/bin/exa && mv /tmp/bin/exa /bin/exa && \
     echo "alias las='exa --octal-permissions -l'" >> /root/.bashrc
 
+COPY ./config/zelogs /bin/zelogs
+
+RUN apt -y install tmux dialog byobu && \
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+
+RUN sed -i 's/OSH_THEME="font"/OSH_THEME="powerline"/' $HOME/.bashrc && sed -i '/^[[:blank:]]*#/d;s/#.*//' $HOME/.bashrc && \
+    sed -i '/^$/d' $HOME/.bashrc && \
+    mkdir -p $HOME/.byobu && echo -e "set -g mouse on\nset -g mouse-select-pane on\nset -g mouse-select-window on\nset -g mouse-resize-pane on\nset -g mouse-utf8 on" >> $HOME/.byobu/profile.tmux
+
 EXPOSE 80
 EXPOSE 443

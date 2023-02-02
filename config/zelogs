@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+tmux start-server
+
+tmux new-session -d -s $USER -n DEV-Terminal -d /bin/bash
+tmux new-window -t $USER:1 -n Errors lnav /var/log/apache2/error.log
+tmux join-pane -t $USER:0 -s 1
+tmux select-layout -t $USER:0 tiled
+tmux attach -t$USER
