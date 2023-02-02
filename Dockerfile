@@ -23,6 +23,9 @@ RUN apt update && \
     unzip \
     p7zip-full \
     openssh-client \
+    tmux \
+    dialog \
+    byobu \
     --no-install-recommends && \
     docker-php-ext-install pdo_mysql && \
     docker-php-ext-install mysqli && \
@@ -59,8 +62,7 @@ RUN apt update && \
 
 COPY ./config/zelogs /bin/zelogs
 
-RUN apt -y install tmux dialog byobu && \
-    bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+RUN  bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
 
 RUN sed -i 's/OSH_THEME="font"/OSH_THEME="powerline"/' $HOME/.bashrc && sed -i '/^[[:blank:]]*#/d;s/#.*//' $HOME/.bashrc && \
     sed -i '/^$/d' $HOME/.bashrc && \
