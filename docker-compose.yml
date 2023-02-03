@@ -8,13 +8,13 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./html:/var/www/html:rw
-      - ./config/php.ini:/usr/local/etc/php/php.ini:ro
-      - ./config/apache2.conf:/etc/apache2/apache2.conf:ro
-      - ./config/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:ro
-      - ${HOME}/docker/d9privatefiles:/home/d9privatefiles:rw
-      - ${HOME}/docker/d9tempfiles:/home/d9tempfiles:rw
-      - ${HOME}/docker/d9publicfiles:/var/www/html/web/sites/default/files:rw
+      - ./html:/var/www/html:delegated
+      - ./config/php.ini:/usr/local/etc/php/php.ini:cached
+      - ./config/apache2.conf:/etc/apache2/apache2.conf:cached
+      - ./config/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:cached
+      - ${HOME}/docker/d9privatefiles:/home/d9privatefiles:delegated
+      - ${HOME}/docker/d9tempfiles:/home/d9tempfiles:delegated
+      - ${HOME}/docker/d9publicfiles:/var/www/html/web/sites/default/files:cached
     
     extra_hosts:
       - "host.docker.internal:host-gateway"
