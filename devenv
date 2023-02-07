@@ -63,16 +63,11 @@ function build_image() {
 }
 
 function clone_repo() {
-  if [ -d "html" ]; then
-    echo "html directory found, recreating"
-    docker-compose down 2>/dev/null
-    sudo rm -rf html
-    git clone $drrepo html
-    docker-compose up -d
-  else
-    echo "html directory not found, exiting"
-    exit 1
-  fi
+  docker exec -it "$(docker ps -aqf "name=$drcontainer")" /bin/bash -c "cd /var/www/html && git init && \
+  git config --global --add safe.directory /var/www/html && \
+  git remote add origin $drrepo && \
+  git pull origin master --allow-unrelated-histories && \
+  git fetch --all"
 }
 
 function start_devenv() {
@@ -82,6 +77,16 @@ function start_devenv() {
 
 function stop_devenv() {
   docker-compose down
+}
+
+function preload_files() {
+  drprefix="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+  drprefix="$(basename "$drprefix")"
+  echo "Loading private files..."
+  docker run --rm -v /Users/jamesini/drupal_files/private:/d9privatefiles -v "${drprefix}"_private:/home/d9privatefiles busybox cp -r /d9privatefiles /home
+  echo ""
+  echo "Loading public files..."
+  docker run --rm -v /Users/jamesini/drupal_files/public:/files -v "${drprefix}"_public:/var/www/html/web/sites/default/files busybox cp -r /files /var/www/html/web/sites/default
 }
 
 # Attach to frontend container
@@ -124,7 +129,7 @@ function destroy_devenv() {
   echo
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     docker-compose down
-    sudo rm -rf html data
+    docker volume rm "$(docker volume ls -q)"
   else
     echo "Exiting"
     exit 1
@@ -187,6 +192,9 @@ function main() {
   "stop")
     stop_devenv
     ;;
+  "preload")
+    preload_files
+    ;;
   "attach")
     attach
     ;;
@@ -216,6 +224,7 @@ function main() {
     echo "  $green clone $clear - Clone the repo into the html directory"
     echo "  $green start $clear - Start the development environment"
     echo "  $green stop $clear - Stop the development environment"
+    echo "  $green preload $clear - Run the preload script (load public/private files)"
     echo "  $green attach $clear - Attach to the frontend container"
     echo "  $green attachto $clear - Attach to an active container"
     echo "  $green destroy $clear - Destroy the development environment"

@@ -16,7 +16,6 @@ services:
       - public:/var/www/html/web/sites/default/files
       - temp:/home/d9tempfiles
       
-    
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
