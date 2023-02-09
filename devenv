@@ -23,8 +23,7 @@ drrepo="https://git.tacoma.uw.edu/uw-tacoma-advancement/uwtd8main.git"
 # Rsync
 drrsyncremotehost="jamesini@uwtdev3.tacoma.uw.edu"
 drrsyncremotepath="/home/jamesini/public_html/uwtd8main_testing/web/sites/default/files/*"
-drrsynclocalpath="/Users/jamesini/docker/d9publicfiles"
-
+drrsynclocalpath="/Users/jamesini/drupal_files/public"
 
 # TPUT Colors
 # --------------------------------------------------------------------------------------------------
