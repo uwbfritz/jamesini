@@ -43,7 +43,7 @@ function load_db() {
     exit 1
   else
     docker cp "$1" "$(docker ps -aqf "name=$drcontainer")":/tmp/"$drparam"
-    docker exec -it "$(docker ps -aqf "name=$drcontainer")" /usr/bin/mysql -u$drdbuser -p"$drdbpassword" -hdb $drdatabase -e 'source /tmp/'"$drparam"''
+    docker exec -it "$(docker ps -aqf "name=$drcontainer")" /usr/bin/mysql -u$drdbuser -p"$drdbpassword" --max_allowed_packet=1073741824 -hdb $drdatabase -e 'source /tmp/'"$drparam"''
   fi
 }
 
