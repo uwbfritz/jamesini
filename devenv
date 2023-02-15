@@ -11,19 +11,19 @@
 
 # Variables
 # --------------------------------------------------------------------------------------------------
-drimage="uwbfritz/d9frontend"
+drimage="uwbfritz/d7frontend"
 drtag="latest"
-drcontainer="drupal9_jamesini_frontend"
-drdatabase="drupal9_jamesini"
+drcontainer="drupal7_jamesini_frontend"
+drdatabase="drupal7_jamesini"
 drdbuser="root"
 drdbpassword="jamesini*"
 drfunction="$1"
 drparam="$2"
-drrepo="https://git.tacoma.uw.edu/uw-tacoma-advancement/uwtd8main.git"
+drrepo="https://git.tacoma.uw.edu/jamesini/UWT-D7-Directory.git"
 # Rsync
 drrsyncremotehost="jamesini@uwtdev3.tacoma.uw.edu"
-drrsyncremotepath="/home/jamesini/public_html/uwtd8main_testing/web/sites/default/files/*"
-drrsynclocalpath="/Users/jamesini/drupal_files/public"
+drrsyncremotepath=""
+drrsynclocalpath=""
 
 # TPUT Colors
 # --------------------------------------------------------------------------------------------------
@@ -79,13 +79,7 @@ function stop_devenv() {
 }
 
 function preload_files() {
-  drprefix="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-  drprefix="$(basename "$drprefix")"
-  echo "Loading private files..."
-  docker run --rm -v /Users/jamesini/drupal_files/private:/d9privatefiles -v "${drprefix}"_private:/home/d9privatefiles busybox cp -r /d9privatefiles /home
-  echo ""
-  echo "Loading public files..."
-  docker run --rm -v /Users/jamesini/drupal_files/public:/files -v "${drprefix}"_public:/var/www/html/web/sites/default/files busybox cp -r /files /var/www/html/web/sites/default
+  echo "Nah, bro"
 }
 
 # Attach to frontend container
@@ -236,3 +230,4 @@ function main() {
 }
 
 main
+clear

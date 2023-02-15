@@ -1,4 +1,4 @@
-FROM php:8.1-apache
+FROM php:7.4-apache
 
 RUN apt update && \
     apt -y upgrade && \
@@ -38,14 +38,13 @@ RUN apt update && \
     docker-php-ext-install bcmath && \
     pecl install imagick && \
     docker-php-ext-enable imagick && \
-    pecl install xdebug && \
-    docker-php-ext-enable xdebug && \
     rm -r /var/lib/apt/lists/* && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/* /var/tmp/* /var/log/lastlog /var/log/faillog && \
     rm -f /var/log/{apt/*,alternatives.log,dpkg.log} && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
+    composer self-update --1 && \
     a2enmod rewrite && \
     a2enmod headers && \
     a2enmod expires && \
@@ -56,7 +55,7 @@ RUN apt update && \
     echo 'RewriteEngine On'                           >> 000-default.conf && \
     echo 'RewriteRule . https://%{SERVER_NAME} [R,L]' >> 000-default.conf && \
     echo '</VirtualHost>'                             >> 000-default.conf && \
-    wget -O /usr/bin/drush https://github.com/drush-ops/drush-launcher/releases/latest/download/drush.phar && chmod +x /usr/bin/drush && \
+    #wget -O /usr/bin/drush https://github.com/drush-ops/drush-launcher/releases/latest/download/drush.phar && chmod +x /usr/bin/drush && \
     wget -O /tmp/exa.zip https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip && \
     unzip /tmp/exa.zip -d /tmp && \
     chmod +x /tmp/bin/exa && mv /tmp/bin/exa /bin/exa && \
