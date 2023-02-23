@@ -7,6 +7,7 @@ RUN apt update && \
     vim \
     nano \
     mariadb-client \
+    less \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
