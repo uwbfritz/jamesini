@@ -1,7 +1,7 @@
 version: "3"
 services:
-  frontend:
-    container_name: drupal9_jamesini_frontend
+  directory-frontend:
+    container_name: drupal9_directory_frontend
     # build: . # use this if you want to build the image locally
     image: "uwbfritz/d9frontend:latest"
     ports:
@@ -11,10 +11,10 @@ services:
       - ./config/php.ini:/usr/local/etc/php/php.ini:cached
       - ./config/apache2.conf:/etc/apache2/apache2.conf:cached
       - ./config/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:cached
-      - html:/var/www/html
-      - private:/home/d9privatefiles
-      - public:/var/www/html/web/sites/default/files
-      - temp:/home/d9tempfiles
+      - directory-html:/var/www/html
+      - directory-private:/home/d9privatefiles
+      - directory-public:/var/www/html/web/sites/default/files
+      - directory-temp:/home/d9tempfiles
       
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -23,21 +23,32 @@ services:
       XDEBUG_CONFIG:
         client_host=host.docker.internal
         start_with_request=yes
-        
     links:
-      - db
-  db:
+      - directory-db
+    networks:
+      - drupal9_directory_network
+  directory-db:
+    container_name: drupal9_directory_db
     image: mysql:8.0
     volumes:
-      - mysql:/var/lib/mysql:rw
+      - directory-mysql:/var/lib/mysql:rw
     environment:
       MYSQL_ROOT_PASSWORD: jamesini*
-      MYSQL_DATABASE: drupal9_jamesini
-      MYSQL_USER: drupal9_jamesini
-      MYSQL_PASSWORD: drupal9_jamesini
+      MYSQL_DATABASE: drupal9_directory_jamesini
+      MYSQL_USER: drupal9_directory_jamesini
+      MYSQL_PASSWORD: drupal9_directory_jamesini
+    networks:
+      - drupal9_directory_network
 volumes:
-  mysql:
-  html:
-  private:
-  public:
-  temp:
+  directory-mysql:
+  directory-html:
+  directory-private:
+  directory-public:
+  directory-temp:
+
+# Network (internal)
+networks:
+  default:
+    internal: true
+  drupal9_directory_network:
+    
